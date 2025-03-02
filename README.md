@@ -24,3 +24,6 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Lama Dev Youtube Channel](https://youtube.com/lamadev) 
 - [Next.js](https://nextjs.org/learn)
+
+using the liberary Recharts 
+https://recharts.org/en-US/examples  -- npm install recharts
