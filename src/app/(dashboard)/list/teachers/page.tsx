@@ -3,6 +3,43 @@ import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
 import Image from "next/image"
 
+const columns =[
+  {
+    header:"info", 
+    accessor:"info"
+  },
+  {
+    header:"Teacher ID", 
+    accessor:"teacherId", 
+    className:"hidden md:table-cell"
+  },
+  {
+    header:"Subjects", 
+    accessor:"subjects", 
+    className:"hidden md:table-cell"
+  },
+  {
+    header:"Classes", 
+    accessor:"classes", 
+    className:"hidden md:table-cell"
+  },
+  {
+    header:"Phone", 
+    accessor:"phone", 
+    className:"hidden lg:table-cell"
+  },
+  {
+    header:"Adress", 
+    accessor:"adress", 
+    className:"hidden lg:table-cell"
+  },
+  {
+    header:"Actions", 
+    accessor:"action", 
+    className:"hidden lg:table-cell"
+  },
+]
+
 const TeacherPage = () => {
   return (
     <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
@@ -27,7 +64,8 @@ const TeacherPage = () => {
         </div>
       </div>
       {/* List */}
-      <Table />
+      <Table columns={columns}/>
+
       {/* Pagination */}
       <Pagination />
 
