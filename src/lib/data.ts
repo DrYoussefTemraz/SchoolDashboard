@@ -819,7 +819,7 @@ export const eventsData = [
     endTime: "11:00",
   },
   {
-    id: 3,
+    id: 7,
     title: "Lake Trip",
     class: "2B",
     date: "2025-01-01",
