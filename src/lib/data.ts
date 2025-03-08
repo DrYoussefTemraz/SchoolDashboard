@@ -495,7 +495,7 @@ export const lessonsData = [
     teacher: "Bettie Oliver",
   },
   {
-    id: 3,
+    id: 7,
     subject: "History",
     class: "6A",
     teacher: "Herman Howard",
