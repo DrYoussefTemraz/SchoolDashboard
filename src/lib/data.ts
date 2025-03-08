@@ -728,7 +728,7 @@ export const resultsData = [
     score: 90,
   },
   {
-    id: 3,
+    id: 7,
     subject: "History",
     class: "6A",
     teacher: "John Doe",
