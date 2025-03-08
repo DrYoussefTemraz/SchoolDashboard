@@ -363,7 +363,7 @@ export const subjectsData = [
     teachers: ["Hannah Bowman", "Betty Obrien"],
   },
   {
-    id: 3,
+    id: 7,
     name: "Geography",
     teachers: ["Lora French", "Sue Brady"],
   },
