@@ -890,7 +890,7 @@ export const announcementsData = [
     date: "2025-01-01",
   },
   {
-    id: 3,
+    id: 7,
     title: "About 4C Math Test",
     class: "4C",
     date: "2025-01-01",
