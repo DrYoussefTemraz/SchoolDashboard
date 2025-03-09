@@ -199,7 +199,7 @@ export const studentsData = [
     address: "123 Main St, Anytown, USA",
   },
   {
-    id: 3,
+    id: 7,
     studentId: "1234567890",
     name: "Allen Black",
     email: "allen@black.com",
@@ -298,7 +298,7 @@ export const parentsData = [
     address: "123 Main St, Anytown, USA",
   },
   {
-    id: 3,
+    id: 7,
     name: "Allen Black",
     students: ["Carrie Tucker", "Lilly Underwood"],
     email: "mike@geller.com",
@@ -363,7 +363,7 @@ export const subjectsData = [
     teachers: ["Hannah Bowman", "Betty Obrien"],
   },
   {
-    id: 3,
+    id: 7,
     name: "Geography",
     teachers: ["Lora French", "Sue Brady"],
   },
@@ -421,14 +421,14 @@ export const classesData = [
     supervisor: "Iva Frank",
   },
   {
-    id: 5,
+    id: 6,
     name: "5B",
     capacity: 20,
     grade: 5,
     supervisor: "Leila Santos",
   },
   {
-    id: 3,
+    id: 7,
     name: "7A",
     capacity: 18,
     grade: 3,
@@ -495,7 +495,7 @@ export const lessonsData = [
     teacher: "Bettie Oliver",
   },
   {
-    id: 3,
+    id: 7,
     subject: "History",
     class: "6A",
     teacher: "Herman Howard",
@@ -637,7 +637,7 @@ export const assignmentsData = [
     dueDate: "2025-01-01",
   },
   {
-    id: 3,
+    id: 7,
     subject: "History",
     class: "6A",
     teacher: "Shawn Norman",
@@ -728,7 +728,7 @@ export const resultsData = [
     score: 90,
   },
   {
-    id: 3,
+    id: 7,
     subject: "History",
     class: "6A",
     teacher: "John Doe",
@@ -819,7 +819,7 @@ export const eventsData = [
     endTime: "11:00",
   },
   {
-    id: 3,
+    id: 7,
     title: "Lake Trip",
     class: "2B",
     date: "2025-01-01",
@@ -890,7 +890,7 @@ export const announcementsData = [
     date: "2025-01-01",
   },
   {
-    id: 3,
+    id: 7,
     title: "About 4C Math Test",
     class: "4C",
     date: "2025-01-01",
