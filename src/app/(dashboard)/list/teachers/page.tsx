@@ -119,7 +119,6 @@ const TeacherListPage = () => {
 
       {/* Pagination */}
       <Pagination />
-
     </div>
   )
 }
