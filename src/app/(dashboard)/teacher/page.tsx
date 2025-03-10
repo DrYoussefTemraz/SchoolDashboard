@@ -16,7 +16,7 @@ const TeacherPage = () => {
         <Announcements />
       </div>
 
-      StudentPage</div>
+      </div>
   )
 }
 

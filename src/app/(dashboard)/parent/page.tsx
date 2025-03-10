@@ -16,7 +16,7 @@ const ParentPage = () => {
         <Announcements />
       </div>
 
-      StudentPage</div>
+      </div>
   )
 }
 

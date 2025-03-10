@@ -21,7 +21,7 @@ const StudentPage = () => {
         <Announcements/>
       </div>
       
-      StudentPage</div>
+      </div>
   )
 }
 
