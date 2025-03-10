@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import TeacherForm from "./forms/TeacherForm";
 
 const FormModal = ({
     table,
@@ -42,7 +43,10 @@ const FormModal = ({
                 <span className="text-center font-medium">All Data Will Be Lost.. Are You Sure You Want to delete this {table}?</span>
                 <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Delete</button>
             </form>)
-            : ("Create or Update form")
+            : (
+                <TeacherForm type="create"/>
+
+            )
 
     }
 
