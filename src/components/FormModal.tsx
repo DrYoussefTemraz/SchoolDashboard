@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import TeacherForm from "./forms/TeacherForm";
+import StudentForm from "./forms/StudentForm";
 
 const FormModal = ({
     table,
@@ -44,7 +45,7 @@ const FormModal = ({
                 <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Delete</button>
             </form>)
             : (
-                <TeacherForm type="create"/>
+                <StudentForm type="create"  />
 
             )
 
