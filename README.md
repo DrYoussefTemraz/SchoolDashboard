@@ -27,3 +27,5 @@ To learn more about Next.js, take a look at the following resources:
 
 using the liberary Recharts 
 https://recharts.org/en-US/examples  -- npm install recharts
+
+completed the design of the dashboard
