@@ -29,3 +29,5 @@ using the liberary Recharts
 https://recharts.org/en-US/examples  -- npm install recharts
 
 completed the design of the dashboard
+
+rename my repo and update the remote version name
