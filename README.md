@@ -31,3 +31,9 @@ https://recharts.org/en-US/examples  -- npm install recharts
 completed the design of the dashboard
 
 rename my repo and update the remote version name
+
+to reset the database using prisma
+1- edit the schema.prisma
+2- in terminal use the command npx prisma db push --force-reset
+3- use the seed again by the command npx prisma db seed
+4- open the studio by the command npx prisma studio -> navigate to the link localhost 5555
