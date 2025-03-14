@@ -105,12 +105,17 @@ const TeacherListPage = async (
 ) => {
   const { page, ...queryParams } = searchParams;
   const p = page ? parseInt(page) : 1;
+ 
 
   // fetching data from prisma tables
-
-
+// adding conditions by whrere methos
   const [data, count] = await prisma.$transaction([
     prisma.teacher.findMany({
+      where:{ 
+        lessons:{
+          some:{classId : parseInt(queryParams.classId!)}
+        }
+      },
       include: {
         subjects: true,
         classes: true
@@ -118,7 +123,13 @@ const TeacherListPage = async (
       take: ITEMS_PER_PAGE,
       skip: ITEMS_PER_PAGE * (p - 1)
     }),
-    prisma.teacher.count()
+    prisma.teacher.count(
+      {where:{ 
+        lessons:{
+          some:{classId : parseInt(queryParams.classId!)}
+        }
+      }},
+    )
   ])
 
 
