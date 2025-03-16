@@ -8,7 +8,6 @@ import { ITEMS_PER_PAGE } from "@/lib/settings"
 import { Class, Prisma, Subject, Teacher } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
-import { object } from "zod"
 
 
 type TeacherList =
