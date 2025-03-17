@@ -116,6 +116,9 @@ const StudentListPage = async (
             query.name = {
               contains: value, mode: "insensitive"
             }
+            break
+          default:
+            break
         }
       }
   }
