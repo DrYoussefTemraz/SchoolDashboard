@@ -5,7 +5,7 @@ import TableSearch from "@/components/TableSearch"
 import { role, teachersData } from "@/lib/data"
 import prisma from "@/lib/prisma"
 import { ITEMS_PER_PAGE } from "@/lib/settings"
-import { Class, Subject, Teacher } from "@prisma/client"
+import { Class, Prisma, Subject, Teacher } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -99,18 +99,38 @@ const TeacherListPage = async (
     {
       searchParams:
       {
+        // queryparams is an object
         [key: string]: string | undefined
       }
     }
 ) => {
   const { page, ...queryParams } = searchParams;
   const p = page ? parseInt(page) : 1;
+  // setting roles for fetching data URL PARAMS CONDITIONS to protect our route data
+  const query: Prisma.TeacherWhereInput = {}
+
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams))
+      if (value !== undefined) {
+        switch (key) {
+          case "classId":
+            query.lessons = {
+              some: { classId: parseInt(queryParams.classId!) }
+            }
+            break;
+            case "search" :
+              query.name= {
+                contains:value , mode: "insensitive"
+              }
+        }
+      }
+  }
 
   // fetching data from prisma tables
-
-
+  // adding conditions by whrere methos
   const [data, count] = await prisma.$transaction([
     prisma.teacher.findMany({
+      where: query,
       include: {
         subjects: true,
         classes: true
@@ -118,7 +138,11 @@ const TeacherListPage = async (
       take: ITEMS_PER_PAGE,
       skip: ITEMS_PER_PAGE * (p - 1)
     }),
-    prisma.teacher.count()
+    prisma.teacher.count(
+      {
+        where: query
+      },
+    )
   ])
 
 
@@ -148,7 +172,7 @@ const TeacherListPage = async (
       <Table columns={columns} renderRow={renderRow} data={data} />
 
       {/* Pagination */}
-      <Pagination page={p} count={count}/>
+      <Pagination page={p} count={count} />
     </div>
   )
 }
