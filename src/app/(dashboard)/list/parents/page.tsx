@@ -3,17 +3,14 @@ import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
 import { parentsData, role, } from "@/lib/data"
+import prisma from "@/lib/prisma"
+import { ITEMS_PER_PAGE } from "@/lib/settings"
+import { Parent, Prisma, Student } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
 
-type Parent = {
-  id: number;
-  name: string;
-  email?: string;
-  students: string[];
-  phone: string;
-  address: string;
-};
+type ParentList = Parent &
+{ students: Student[] }
 
 const columns = [
   {
@@ -42,42 +39,82 @@ const columns = [
 ];
 
 // it is  not returned, and used to the tsx file "renderRow"
-const ParentListPage = () => {
-  const renderRow = (item: Parent) => (
-    <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurple">
-      <td className="flex items-center gap-4 p-4">
-        <div className="flex flex-col">
-          <h3 className="font-semibold">{item.name}</h3>
-          <p className="text-xs text-gray-500">{item?.email}</p>
-        </div>
-      </td>
-      <td className="hidden md:table-cell">{item.students.join(",")}</td>
-      <td className="hidden md:table-cell">{item.phone}</td>
-      <td className="hidden md:table-cell">{item.address}</td>
-      <td>
-        <div className="flex items-center gap-3">
-          {/* <Link href={`/list/teachers/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
-              <Image src="/edit.png" alt="" width={16} height={16} />
-            </button>
-          </Link> */}
+const renderRow = (item: ParentList) => (
+  <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurple">
+    <td className="flex items-center gap-4 p-4">
+      <div className="flex flex-col">
+        <h3 className="font-semibold">{item.name}</h3>
+        <p className="text-xs text-gray-500">{item?.email}</p>
+      </div>
+    </td>
+    <td className="hidden md:table-cell">
+      {item.students.map(student => (student.name)).join(",")}
+    </td>
+    <td className="hidden md:table-cell">{item.phone}</td>
+    <td className="hidden md:table-cell">{item.address}</td>
+    <td>
+      <div className="flex items-center gap-3">
+        {
+          role === "admin" &&
+          <>
+            <FormModal table="parent" type="update" data={item} />
+            <FormModal table="parent" type="delete" id={item.id} />
+          </>
+        }
+      </div>
+    </td>
+  </tr>
+)
+const ParentListPage = async (
+  { searchParams
+  }:
+    {
+      searchParams:
+      {
+        
+        [key: string]: string | undefined
+      }
+    }
+) => {
+  const { page, ...queryParams } = searchParams;
+  const p = page ? parseInt(page) : 1;
+  const query: Prisma.ParentWhereInput = {}
 
-          {
-            role === "admin" &&
-            // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple">
-            //   <Image src="/delete.png" alt="" width={16} height={16} />
-            // </button>
-            <>
-              <FormModal table="parent" type="update" data={item} />
-              <FormModal table="parent" type="delete" id={item.id} />
-            </>
-          }
-        </div>
-      </td>
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams))
+      if (value !== undefined) {
+        switch (key) {
 
-    </tr>
+          case "search":
+            query.name = {
+              contains: value, mode: "insensitive"
+            }
+            break;
+          default:
+            break
+        }
 
-  )
+      }
+  }
+
+  // fetching data from prisma tables
+  // adding conditions by whrere methos
+  const [data, count] = await prisma.$transaction([
+    prisma.parent.findMany({
+      where: query,
+      include: {
+        students: true,
+
+      },
+      take: ITEMS_PER_PAGE,
+      skip: ITEMS_PER_PAGE * (p - 1)
+    }),
+    prisma.parent.count(
+      {
+        where: query
+      },
+    )
+  ])
   return (
     <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
       {/* Top */}
@@ -97,17 +134,17 @@ const ParentListPage = () => {
               //   <Image src="/plus.png" alt="" width={14} height={14} />
               // </button>
               <FormModal table="parent" type="create" />
-              }
+            }
 
 
           </div>
         </div>
       </div>
       {/* List */}
-      <Table columns={columns} renderRow={renderRow} data={parentsData} />
+      <Table columns={columns} renderRow={renderRow} data={data} />
 
       {/* Pagination */}
-      <Pagination />
+      <Pagination page={p} count={count} />
 
     </div>
   )
