@@ -43,3 +43,6 @@ link : https://www.youtube.com/watch?v=6sfiAyKy8Jo&t=4682s
 3 April: 2:00:00 - 2:06-11
 
 user authentication using clerk
+version 5.4.1
+clerk elements Beta
+npm install @clerk/elements@0.14.6
