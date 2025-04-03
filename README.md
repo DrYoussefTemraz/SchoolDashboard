@@ -41,3 +41,5 @@ to reset the database using prisma
 ##for the updated code along 
 link : https://www.youtube.com/watch?v=6sfiAyKy8Jo&t=4682s
 3 April: 2:00:00 - 2:06-11
+
+user authentication using clerk
