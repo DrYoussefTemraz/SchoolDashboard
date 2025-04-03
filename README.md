@@ -38,6 +38,6 @@ to reset the database using prisma
 3- use the seed again by the command npx prisma db seed
 4- open the studio by the command npx prisma studio -> navigate to the link localhost 5555
 
-for the updated code along 
+##for the updated code along 
 link : https://www.youtube.com/watch?v=6sfiAyKy8Jo&t=4682s
-3 April: 2:00:00
+3 April: 2:00:00 - 2:06-11
