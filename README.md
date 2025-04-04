@@ -46,3 +46,8 @@ user authentication using clerk
 version 5.4.1
 clerk elements Beta
 npm install @clerk/elements@0.14.6
+
+4 April 2:31:00 - protecting routes
+4 April 2:31- using createRouteMatcher()
+
+5 april - the user role is dynamic according to the login role coming from publicmetadata
