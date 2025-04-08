@@ -2,12 +2,14 @@ import FormModal from "@/components/FormModal"
 import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
-import { announcementsData, eventsData, role } from "@/lib/data"
 import prisma from "@/lib/prisma"
 import { ITEMS_PER_PAGE } from "@/lib/settings"
-import { Announcement, Class, Prisma, Teacher } from "@prisma/client"
+import { role } from "@/lib/utilis"
+import { Announcement, Class, Prisma } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
+
+
 
 type AnnouncementList = Announcement
     & { class: Class }
@@ -26,10 +28,10 @@ const columns = [
         accessor: "date",
         className: "hidden md:table-cell",
     },
-    {
+    ...(role === "admin" ? [{
         header: "Actions",
         accessor: "action",
-    },
+    }] : []),
 ];
 const renderRow = (item: AnnouncementList) => (
     <tr key={item.id}
