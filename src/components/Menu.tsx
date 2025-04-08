@@ -118,12 +118,9 @@ const menuItems = [
 ];
 
 const Menu = async () => {
-  const user = await currentUser()
-  if (!user) {
-    console.log("User not authenticated in Menu.");
-    return null;
-  }
-  const role = user?.publicMetadata.role as string
+  const user = await currentUser();
+  const role = user?.publicMetadata?.role as string;
+  console.log(user?.publicMetadata?.role)
   return (
     <div className="mt-4 text-sm">
       {menuItems.map((i) => (
