@@ -35,7 +35,7 @@ const columns = [
         accessor: "supervisor",
         className: "hidden md:table-cell",
     },
-    ...(role === "admin" 
+    ...(role === "admin"
         ? [
             {
                 header: "Actions",
@@ -87,7 +87,7 @@ const ClassListPage = async (
     const query: Prisma.ClassWhereInput = {}
 
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
                     case "supervisorId":
@@ -102,8 +102,8 @@ const ClassListPage = async (
                     default:
                         break
                 }
-
             }
+        }
     }
 
     // fetching data from prisma tables

@@ -69,7 +69,7 @@ const SubjectListPage = async (
     const query: Prisma.SubjectWhereInput = {}
 
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
 
@@ -81,8 +81,8 @@ const SubjectListPage = async (
                     default:
                         break
                 }
-
             }
+        }
     }
 
     // fetching data from prisma tables

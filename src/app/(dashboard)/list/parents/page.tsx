@@ -71,7 +71,7 @@ const ParentListPage = async (
     {
       searchParams:
       {
-        
+
         [key: string]: string | undefined
       }
     }
@@ -81,7 +81,7 @@ const ParentListPage = async (
   const query: Prisma.ParentWhereInput = {}
 
   if (queryParams) {
-    for (const [key, value] of Object.entries(queryParams))
+    for (const [key, value] of Object.entries(queryParams)) {
       if (value !== undefined) {
         switch (key) {
 
@@ -93,8 +93,8 @@ const ParentListPage = async (
           default:
             break
         }
-
       }
+    }
   }
 
   // fetching data from prisma tables

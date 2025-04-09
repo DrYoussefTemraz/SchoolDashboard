@@ -110,7 +110,7 @@ const TeacherListPage = async (
   const query: Prisma.TeacherWhereInput = {}
 
   if (queryParams) {
-    for (const [key, value] of Object.entries(queryParams))
+    for (const [key, value] of Object.entries(queryParams)) {
       if (value !== undefined) {
         switch (key) {
           case "classId":
@@ -127,6 +127,7 @@ const TeacherListPage = async (
             break
         }
       }
+    }
   }
 
   // fetching data from prisma tables

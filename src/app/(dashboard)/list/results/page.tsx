@@ -101,29 +101,29 @@ const ResultListPage = async (
     // URL PARAMS CONDITIONS
     const query: Prisma.ResultWhereInput = {}
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
                     case "studentId":
                         query.studentId = value;
                         break;
-                   
+
                     case "search":
                         // query.OR properly creates separate objects for each field.
                         query.OR = [
                             {
                                 exam: {
-                                    title: { contains: value, mode : "insensitive" }
+                                    title: { contains: value, mode: "insensitive" }
                                 }
                             },
                             {
                                 assignment: {
-                                    title: { contains: value, mode : "insensitive" }
+                                    title: { contains: value, mode: "insensitive" }
                                 }
                             },
                             {
                                 student: {
-                                    name: { contains: value, mode : "insensitive" }
+                                    name: { contains: value, mode: "insensitive" }
                                 }
                             }
                         ]
@@ -132,8 +132,8 @@ const ResultListPage = async (
                     default:
                         break
                 }
-
             }
+        }
     }
 
     // fetching data from prisma tables

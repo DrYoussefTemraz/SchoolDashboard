@@ -75,7 +75,7 @@ const AnnouncementListPage = async (
     const query: Prisma.AnnouncementWhereInput = {}
 
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
 
@@ -88,6 +88,7 @@ const AnnouncementListPage = async (
                         break
                 }
             }
+        }
     }
 
     // fetching data from prisma tables

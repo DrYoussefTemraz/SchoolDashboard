@@ -83,7 +83,7 @@ const ExamListPage = async (
     // URL PARAMS CONDITIONS
     const query: Prisma.ExamWhereInput = {}
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
                     case "classId":
@@ -103,8 +103,8 @@ const ExamListPage = async (
                     default:
                         break
                 }
-
             }
+        }
     }
 
     // fetching data from prisma tables
