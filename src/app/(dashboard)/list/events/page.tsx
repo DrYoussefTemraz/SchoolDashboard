@@ -2,9 +2,9 @@ import FormModal from "@/components/FormModal"
 import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
-import { eventsData, role } from "@/lib/data"
 import prisma from "@/lib/prisma"
 import { ITEMS_PER_PAGE } from "@/lib/settings"
+import { currentUserId, role } from "@/lib/utilis"
 import { Class, Event, Prisma } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
@@ -36,16 +36,20 @@ const columns = [
         accessor: "endTime",
         className: "hidden md:table-cell",
     },
-    {
-        header: "Actions",
-        accessor: "action",
-    },
+    ...(role === "admin"
+        ? [
+            {
+                header: "Actions",
+                accessor: "action",
+            },
+        ]
+        : []),
 ];
 const renderRow = (item: EventList) => (
     <tr key={item.id}
         className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurple">
         <td className="flex items-center gap-4 p-4">{item.title}</td>
-        <td>{item.class.name}</td>
+        <td>{item.class?.name || "-"} </td>
         <td className="hidden md:table-cell">
             {new Intl.DateTimeFormat("en-US").format(item.startTime)}
         </td>
@@ -67,16 +71,9 @@ const renderRow = (item: EventList) => (
         {/* Actions */}
         <td>
             <div className="flex items-center gap-3">
-                {/* <Link href={`/list/teachers/${item.id}`}>
-                    <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
-                        <Image src="/edit.png" alt="" width={16} height={16} />
-                    </button>
-                </Link> */}
                 {
                     role === "admin" &&
-                    // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple">
-                    //     <Image src="/delete.png" alt="" width={16} height={16} />
-                    // </button>
+
                     <>
                         <FormModal table="event" type="update" data={item} />
                         <FormModal table="event" type="delete" id={item.id} />
@@ -106,10 +103,9 @@ const EventListPage = async (
     const query: Prisma.EventWhereInput = {}
 
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
-
                     case "search":
                         query.title = {
                             contains: value, mode: "insensitive"
@@ -119,10 +115,38 @@ const EventListPage = async (
                         break
                 }
             }
+        }
     }
+    // ROLE CONDITIONS - FILTER
+    // switch (role) {
+    //     case "admin":
+    //         break;
+    //     case "teacher":
+    //         query.OR =[
+    //             {classId: null},
+    //             {class:{lessons:{some:{
+    //                 teacherId: currentUserId!
+    //             }}}}
+    //         ]
+    //         break;
 
-    // fetching data from prisma tables
-    // adding conditions by whrere methos
+    //     default:
+    //         break;
+    // }
+    // Other way***
+    const roleConditions = {
+        teacher: { lessons: { some: { teacherId: currentUserId! } } },
+        student: { students: { some: { id: currentUserId! } } },
+        parent: { students: { some: { parentId: currentUserId! } } }
+    }
+    query.OR = [
+        { classId: null }, {
+            class: roleConditions[role as keyof typeof roleConditions]
+                || {}
+        }
+    ]
+
+
     const [data, count] = await prisma.$transaction([
         prisma.event.findMany({
             where: query,

@@ -9,10 +9,10 @@ import { Class, Lesson, Prisma, Subject, Teacher } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
 
-type LessonList = Lesson 
-&{subject:Subject}
-&{class:Class}
-&{teacher:Teacher}
+type LessonList = Lesson
+    & { subject: Subject }
+    & { class: Class }
+    & { teacher: Teacher }
 
 
 const columns = [
@@ -74,7 +74,7 @@ const LessonListPage = async (
     const query: Prisma.LessonWhereInput = {}
 
     if (queryParams) {
-        for (const [key, value] of Object.entries(queryParams))
+        for (const [key, value] of Object.entries(queryParams)) {
             if (value !== undefined) {
                 switch (key) {
                     case "classId":
@@ -85,16 +85,16 @@ const LessonListPage = async (
                         break;
 
                     case "search":
-                        query.OR=[
-                        {subject :{name: {contains: value, mode: "insensitive"}}},
-                        {teacher :{name:{contains: value, mode: "insensitive"}}}
+                        query.OR = [
+                            { subject: { name: { contains: value, mode: "insensitive" } } },
+                            { teacher: { name: { contains: value, mode: "insensitive" } } }
                         ]
                         break;
                     default:
                         break
                 }
-
             }
+        }
     }
 
     // fetching data from prisma tables
@@ -114,7 +114,7 @@ const LessonListPage = async (
                 },
                 teacher: {
                     select:
-                        { name: true , surname:true}
+                        { name: true, surname: true }
                 },
 
 
