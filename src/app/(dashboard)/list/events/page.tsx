@@ -4,7 +4,7 @@ import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
 import prisma from "@/lib/prisma"
 import { ITEMS_PER_PAGE } from "@/lib/settings"
-import { role } from "@/lib/utilis"
+import { currentUserId, role } from "@/lib/utilis"
 import { Class, Event, Prisma } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
@@ -49,7 +49,7 @@ const renderRow = (item: EventList) => (
     <tr key={item.id}
         className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurple">
         <td className="flex items-center gap-4 p-4">{item.title}</td>
-        <td>{item.class.name}</td>
+        <td>{item.class?.name || "-"} </td>
         <td className="hidden md:table-cell">
             {new Intl.DateTimeFormat("en-US").format(item.startTime)}
         </td>
@@ -117,6 +117,34 @@ const EventListPage = async (
             }
         }
     }
+    // ROLE CONDITIONS - FILTER
+    // switch (role) {
+    //     case "admin":
+    //         break;
+    //     case "teacher":
+    //         query.OR =[
+    //             {classId: null},
+    //             {class:{lessons:{some:{
+    //                 teacherId: currentUserId!
+    //             }}}}
+    //         ]
+    //         break;
+
+    //     default:
+    //         break;
+    // }
+    // Other way***
+    const roleConditions = {
+        teacher: { lessons: { some: { teacherId: currentUserId! } } },
+        student: { students: { some: { id: currentUserId! } } },
+        parent: { students: { some: { parentId: currentUserId! } } }
+    }
+    query.OR = [
+        { classId: null }, {
+            class: roleConditions[role as keyof typeof roleConditions]
+                || {}
+        }
+    ]
 
 
     const [data, count] = await prisma.$transaction([
