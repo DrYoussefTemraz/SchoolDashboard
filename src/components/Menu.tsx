@@ -119,8 +119,12 @@ const menuItems = [
 
 const Menu = async () => {
   const user = await currentUser();
+  if (!user || !user?.publicMetadata?.role) {
+    console.log(user)
+    return <div>Trying to get user</div>
+  }
   const role = user?.publicMetadata?.role as string;
-  console.log(user?.publicMetadata?.role)
+  // console.log(user?.publicMetadata?.role)
   return (
     <div className="mt-4 text-sm">
       {menuItems.map((i) => (
