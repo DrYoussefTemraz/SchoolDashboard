@@ -2,9 +2,9 @@ import FormModal from "@/components/FormModal"
 import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
-import { parentsData, role, } from "@/lib/data"
 import prisma from "@/lib/prisma"
 import { ITEMS_PER_PAGE } from "@/lib/settings"
+import { role } from "@/lib/utilis"
 import { Parent, Prisma, Student } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
@@ -32,10 +32,12 @@ const columns = [
     accessor: "address",
     className: "hidden lg:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "action",
-  },
+  ...(role === "admin"
+    ? [{
+      header: "Actions",
+      accessor: "action",
+    }]
+    : []),
 ];
 
 // it is  not returned, and used to the tsx file "renderRow"
@@ -96,8 +98,7 @@ const ParentListPage = async (
       }
     }
   }
-
-  // fetching data from prisma tables
+   // fetching data from prisma tables
   // adding conditions by whrere methos
   const [data, count] = await prisma.$transaction([
     prisma.parent.findMany({
@@ -130,9 +131,6 @@ const ParentListPage = async (
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" &&
-              // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              //   <Image src="/plus.png" alt="" width={14} height={14} />
-              // </button>
               <FormModal table="parent" type="create" />
             }
 
