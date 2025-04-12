@@ -2,9 +2,9 @@ import FormModal from "@/components/FormModal"
 import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
-import { role, subjectsData, } from "@/lib/data"
 import prisma from "@/lib/prisma"
 import { ITEMS_PER_PAGE } from "@/lib/settings"
+import { role } from "@/lib/utilis"
 import { Prisma, Student, Teacher } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
@@ -42,10 +42,10 @@ const renderRow = (item: SubjectLIST) => (
 
                 {
                     role === "admin" &&
-                    <>
+                    (<>
                         <FormModal table="subject" type="update" data={item} />
                         <FormModal table="subject" type="delete" id={item.id} />
-                    </>
+                    </>)
                 }
             </div>
         </td>

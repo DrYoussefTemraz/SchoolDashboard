@@ -18,7 +18,7 @@ const UserCard = async ({ type }:
   }
 
   const data = await modleMap[type].count()
-  console.log(data)
+  // console.log(data)
   return (
     <div className="rounded-2xl odd:bg-lamaPurple even:bg-lamaYellow p-4 flex-1 min-w-[130px]">
       <div className="flex justify-between items-center">
