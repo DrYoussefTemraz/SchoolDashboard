@@ -4,6 +4,9 @@ import Image from "next/image"
 
 const Navbar = async () => {
   const user = await currentUser();
+  if (!user || !user?.publicMetadata?.role) {
+    console.log(user)
+    return <div>Trying to get user</div>}
   return (
     <div className='flex items-center justify-between p-4'>
       {/* SEARCH BAR */}
