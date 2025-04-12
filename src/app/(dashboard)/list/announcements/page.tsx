@@ -91,17 +91,20 @@ const AnnouncementListPage = async (
         }
     }
 
-    const roleConditions = {
+    if (role !== "admin") {
+        const roleConditions = {
             teacher: { lessons: { some: { teacherId: currentUserId! } } },
             student: { students: { some: { id: currentUserId! } } },
             parent: { students: { some: { parentId: currentUserId! } } }
         }
+    
         query.OR = [
-            { classId: null }, {
-                class: roleConditions[role as keyof typeof roleConditions]
-                    || {}
+            { classId: null },
+            {
+                class: roleConditions[role as keyof typeof roleConditions] || {}
             }
         ]
+    }
 
     // fetching data from prisma tables
     // adding conditions by whrere methos
@@ -136,9 +139,7 @@ const AnnouncementListPage = async (
                             <Image src="/sort.png" alt="" width={14} height={14} />
                         </button>
                         {role === "admin" &&
-                            // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-                            //     <Image src="/plus.png" alt="" width={14} height={14} />
-                            // </button>
+                            
                             <FormModal table="announcement" type="create" />
                         }
 
